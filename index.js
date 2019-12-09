@@ -1,3 +1,4 @@
+'use strict';
 const store = {
   items: [
     { id: cuid(), name: 'apples', checked: false },
@@ -5,7 +6,8 @@ const store = {
     { id: cuid(), name: 'milk', checked: true },
     { id: cuid(), name: 'bread', checked: false }
   ],
-  hideCheckedItems: false
+  hideCheckedItems: false,
+  newItemName : ''
 };
 
 const generateItemElement = function (item) {
@@ -26,6 +28,10 @@ const generateItemElement = function (item) {
         <button class='shopping-item-delete js-item-delete'>
           <span class='button-label'>delete</span>
         </button>
+        <button class='shopping-item-edit js-item-edit'>
+          <span class='button-label'>edit</span>
+        </button>
+        
       </div>
     </li>`;
 };
@@ -69,9 +75,35 @@ const addItemToShoppingList = function (itemName) {
 const handleNewItemSubmit = function () {
   $('#js-shopping-list-form').submit(function (event) {
     event.preventDefault();
-    const newItemName = $('.js-shopping-list-entry').val();
+    const newItemName = $('input.js-shopping-list-entry').val();
     $('.js-shopping-list-entry').val('');
     addItemToShoppingList(newItemName);
+    render();
+  });
+};
+
+const editItemTitleStore = function (id, newName) {
+  const editedItem = store.items.find(item => item.id === id);
+  store.newItemName =  newName;
+  console.log(`store.newItemName is now: ${store.newItemName}`); 
+  console.log(`editedItem is now: ${editedItem}`);  
+  
+  editedItem.name = newName;
+};
+
+const handleEditItemTitle = function () {
+  // Like in `handleItemCheckClicked`, 
+  // we use event delegation.
+  $('.js-shopping-list').on('click', '.js-item-edit', event => {
+    // Get the index of the item in store.items.
+    const id = getItemIdFromElement(event.currentTarget);
+    console.log (`The id of that element is: ${id}`);
+    const newName = $('.js-shopping-list-edit').val();
+    console.log (`The newName of that element will be: ${newName}.`);
+    // Delete the item.
+    editItemTitleStore(id, newName);
+    // Render the updated shopping list.
+    $('.js-shopping-list-edit').val('');
     render();
   });
 };
@@ -160,6 +192,7 @@ const handleShoppingList = function () {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleToggleFilterClick();
+  handleEditItemTitle();
 };
 
 // when the page loads, call `handleShoppingList`

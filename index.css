@@ -16,6 +16,8 @@ button:hover {
   cursor: pointer;
 }
 
+
+
 .hidden {
   display: none;
 }
@@ -50,4 +52,8 @@ button:hover {
 
 .shopping-item__checked {
   text-decoration: line-through;
+}
+
+.shopping-list-edit {
+  display: block;
 }
