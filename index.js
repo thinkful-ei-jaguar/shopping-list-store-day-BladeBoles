@@ -99,7 +99,7 @@ const handleEditItemTitle = function () {
     // Get the index of the item in store.items.
     const id = getItemIdFromElement(event.currentTarget);
     console.log (`The id of that element is: ${id}`);
-    const newName = $('ul > li > div > input.js-shopping-list-edit').val();
+    const newName = $('ul > li > div > input.js-shopping-list-edit').closest().val();
     console.log (`The newName of that element will be: ${newName}.`);
     // Delete the item.
     editItemTitleStore(id, newName);
