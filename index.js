@@ -31,7 +31,8 @@ const generateItemElement = function (item) {
         <button class='shopping-item-edit js-item-edit'>
           <span class='button-label'>edit</span>
         </button>
-        
+        <input type="text" name="shopping-list-edit" class="js-shopping-list-edit" placeholder = 'enter new item name here'>
+
       </div>
     </li>`;
 };
@@ -98,7 +99,7 @@ const handleEditItemTitle = function () {
     // Get the index of the item in store.items.
     const id = getItemIdFromElement(event.currentTarget);
     console.log (`The id of that element is: ${id}`);
-    const newName = $('.js-shopping-list-edit').val();
+    const newName = $('ul > li > div > input.js-shopping-list-edit').val();
     console.log (`The newName of that element will be: ${newName}.`);
     // Delete the item.
     editItemTitleStore(id, newName);
